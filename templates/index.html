@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>画像をPDFに変換</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>画像を選択してPDFに変換</h1>
+        <p>複数の画像ファイル（PNG, JPG, GIF）を選択して、1つのPDFにまとめることができます。</p>
+        <form action="/convert" method="post" enctype="multipart/form-data" id="upload-form">
+            <div class="file-input-wrapper">
+                <input type="file" name="images" id="images" multiple required accept="image/png, image/jpeg, image/gif">
+                <label for="images" class="file-input-label">画像を選択</label>
+            </div>
+            <div id="file-list"></div>
+            <button type="submit" class="convert-button">PDFに変換</button>
+        </form>
+    </div>
+    <script>
+        document.getElementById('images').addEventListener('change', function(e) {
+            var fileList = document.getElementById('file-list');
+            fileList.innerHTML = '';
+            var files = e.target.files;
+            if (files.length > 0) {
+                var list = document.createElement('ul');
+                for (var i = 0; i < files.length; i++) {
+                    var item = document.createElement('li');
+                    item.textContent = files[i].name;
+                    list.appendChild(item);
+                }
+                fileList.appendChild(list);
+            }
+        });
+    </script>
+</body>
+</html>
